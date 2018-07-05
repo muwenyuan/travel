@@ -3,6 +3,7 @@
     <city-header></city-header>
     <city-search></city-search>
     <city-list :cities="cities" :hotCities="hotCities"></city-list>
+    <city-letter :cities="cities"></city-letter>
   </div>
 </template>
 
@@ -10,13 +11,15 @@
 import CityHeader from './components/header.vue';
 import CitySearch from './components/citySearch.vue';
 import CityList from './components/list.vue';
+import CityLetter from './components/letter.vue';
 import axios from "axios"
 export default {
   name: 'city',
   components:{
     CityHeader,
     CitySearch,
-    CityList
+    CityList,
+    CityLetter
   },
   data(){
     return {
