@@ -17,7 +17,7 @@
           </div>
         </div>
       </div>
-      <div class="cityList" v-for="(item,key) of cities" :key="key">
+      <div class="cityList" v-for="(item,key) of cities" :key="key" :ref="key">
         <div class="title">{{key}}</div>
         <div class="letterBox">
           <div class="letterList" v-for="itemlist of item" :key="itemlist.id">{{itemlist.name}}</div>
@@ -33,7 +33,8 @@ export default {
   name: 'cityList',
   props:{
     cities:Object,
-    hotCities:Array
+    hotCities:Array,
+    letter:String
   },
   data(){
     return {
@@ -44,6 +45,12 @@ export default {
     this.$nextTick(()=>{
       this.scroll=new BScroll(this.$refs.list,{})
     })
+  },
+  watch:{
+    letter(){
+      const element=this.$refs[this.letter][0]
+      this.scroll.scrollToElement(element,300)
+    }
   }
 }
 </script>

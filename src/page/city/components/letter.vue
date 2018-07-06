@@ -1,7 +1,14 @@
 <template>
   <div class="letter">
     <ul>
-      <li v-for="(item,key) of cities" @click="clickletter">{{key}}</li>
+      <li
+        v-for="item of letters"
+        @click="clickletter"
+        @touchstart="touchStart"
+        @touchmove="touchMove"
+        @touchend="touchEnd"
+        :ref="item"
+      >{{item}}</li>
     </ul>
   </div>
 </template>
@@ -14,11 +21,46 @@ export default {
   },
   data(){
     return {
+      handtouchStart:false,
+      startAY:0,
+      timer:null
     }
+  },
+  computed:{
+    letters(){
+      const letters=[]
+      for (let i in this.cities) {
+        letters.push(i)
+      }
+      return letters
+    }
+  },
+  updated(){
+    this.startAY=this.$refs["A"][0].offsetTop
   },
   methods:{
     clickletter(e){
-      console.log(e.target.innerHTML)
+      this.$emit("change",e.target.innerHTML)
+    },
+    touchStart(){
+      this.handtouchStart=true
+    },
+    touchMove(e){
+      if(this.handtouchStart){
+        if(this.timer){
+          clearTimeout(this.timer)
+        }
+        this.timer=setTimeout(()=>{
+          const touchmoveY=e.touches[0].clientY-89;
+          const index=Math.floor((touchmoveY-this.startAY)/20)
+          if(index>=0&&index<this.letters.length){
+            this.$emit("change",this.letters[index])
+          }
+        },16)
+      }
+    },
+    touchEnd(){
+      this.handtouchStart=false
     }
   }
 }
