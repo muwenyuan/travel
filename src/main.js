@@ -4,6 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
+import store from './store/index.js'
 import "./assets/reset.css"
 import "./assets/border.css"
 import "./assets/iconfont/iconfont.css"
@@ -15,6 +16,7 @@ Vue.use(VueAwesomeSwiper)
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })

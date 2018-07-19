@@ -16,7 +16,7 @@ import HomeRecommend from './components/recommend.vue';
 import HomeWeekend from './components/weekend.vue';
 import axios from 'axios';
 export default {
-  name: 'Home',
+  name: 'Home',   //name的作用   1、做递归组件；2、取消缓存 exclude="Home"
   components:{
     HomeHeader,
     HomeSwiper,
@@ -30,7 +30,8 @@ export default {
       swiperList:[],
       recommendList:[],
       weekendList:[],
-      city:'北京'
+      city:this.$store.state.city,
+      lastCity:''
     }
   },
   methods:{
@@ -39,7 +40,6 @@ export default {
       .then(this.getHomeSucc)
     },
     getHomeSucc(res){
-      console.log(res)
       res=res.data;
       if(res.ret && res.data){
         this.iconList=res.data.iconList;
@@ -50,7 +50,17 @@ export default {
     }
   },
   mounted(){
+    this.lastCity=this.city
     this.homeInit()
+  },
+  activated(){
+    this.city=this.$store.state.city
+    if(this.lastCity !== this.city){
+      this.lastCity=this.city
+      this.homeInit()
+    }else{
+      console.log(2)
+    }
   }
 }
 </script>

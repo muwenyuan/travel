@@ -5,14 +5,14 @@
         <div class="title">当前城市</div>
         <div class="buttonList">
           <div class="buttonWrap">
-            <div class="button">北京</div>
+            <div class="button">{{$store.state.city}}</div>
           </div>
         </div>
       </div>
       <div class="cityList">
         <div class="title">热门城市</div>
         <div class="buttonList">
-          <div class="buttonWrap" v-for="item of hotCities" :key="item.id">
+          <div class="buttonWrap" v-for="item of hotCities" :key="item.id" @click="handleCityClick(item.name)">
             <div class="button">{{item.name}}</div>
           </div>
         </div>
@@ -20,7 +20,7 @@
       <div class="cityList" v-for="(item,key) of cities" :key="key" :ref="key">
         <div class="title">{{key}}</div>
         <div class="letterBox">
-          <div class="letterList" v-for="itemlist of item" :key="itemlist.id">{{itemlist.name}}</div>
+          <div class="letterList" v-for="itemlist of item" :key="itemlist.id" @click="handleCityClick(itemlist.name)">{{itemlist.name}}</div>
         </div>
       </div>
     </div>
@@ -38,13 +38,20 @@ export default {
   },
   data(){
     return {
-
     }
   },
   mounted(){
     this.$nextTick(()=>{
-      this.scroll=new BScroll(this.$refs.list,{})
+      this.scroll=new BScroll(this.$refs.list,{
+        click:true
+      })
     })
+  },
+  methods:{
+    handleCityClick(city){
+      this.$store.dispatch('changeCity',city);
+      this.$router.push("/")
+    }
   },
   watch:{
     letter(){
