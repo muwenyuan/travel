@@ -4,6 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
+import 'babel-polyfill'  //解决浏览器不支持promise
 import store from './store/index.js'
 import "./assets/reset.css"
 import "./assets/border.css"

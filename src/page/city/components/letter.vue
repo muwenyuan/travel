@@ -4,7 +4,7 @@
       <li
         v-for="item of letters"
         @click="clickletter"
-        @touchstart="touchStart"
+        @touchstart.prevent="touchStart"
         @touchmove="touchMove"
         @touchend="touchEnd"
         :ref="item"
